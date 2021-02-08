@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.76.5 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="Lukar Huang">
+<meta name="keywords" content="">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Analytics: Clustering 3PT Shooters">
+<meta name="twitter:title" content="Analytics: Clustering 3PT Shooters">
+<meta property="og:url" content="https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/">
+<meta property="twitter:url" content="https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/">
+<meta property="og:site_name" content="Home">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2021-01-04T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2021-01-04T00:00:00">
+  
+  
+  
+  
+    
+      <meta property="article:tag" content="nba analytics">
+    
+      <meta property="article:tag" content="nba">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://lukarh.github.io/img/cluster.png">
+  <meta property="twitter:image" content="https://lukarh.github.io/img/cluster.png">
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/73f43cd288b0a481002bce984d00baad?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/73f43cd288b0a481002bce984d00baad?s=640">
+
+
+    <title>Analytics: Clustering 3PT Shooters</title>
+
+    <link rel="icon" href="https://lukarh.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://lukarh.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://lukarh.github.io/">Home</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://lukarh.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/73f43cd288b0a481002bce984d00baad?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://lukarh.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/73f43cd288b0a481002bce984d00baad?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Lukar Huang</h4>
+        
+          <h5 class="sidebar-profile-bio">Third Year Undergraduate at Carnegie Mellon studying Physics</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lukarh.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lukarh.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lukarh.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lukarh.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lukarh.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/lukarh" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/lukar-huang-50682a146/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">Linkedin</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Analytics: Clustering 3PT Shooters
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-01-04T00:00:00Z">
+        
+  January 4, 2021
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <div class="figure " >
+  
+    <img class="fig-img" src="https://i.imgur.com/MboBtEt.jpg"  alt="League Average represented by grey line">
+  
+   
+    <span class="caption">League Average represented by grey line</span>
+  
+</div>
+
+<p>When the two-time MVP Stephen Curry cashed in a whopping 402 threes during his Warriors' magical 73-9 run, the most made in a single season by a player to this date, he forced us to stretch our offensive imagination beyond the three-point line. From that moment and on, <a href="https://www.theringer.com/nba/2019/2/27/18240583/3-point-boom-nba-daryl-morey">the league followed suit by launching threes at a historic rate with each passing year</a>. Now when you look at the stats leaderboard, the list is littered with players sitting north of five three-point attempts per game, and for a select few, even more than ten attempts.</p>
+<p>With the recent boom in three-point practitioners, a fun little project we can do is group players by the <em>type</em> of three-point shooter they are. For example, Damian Lillard is a long-range pull-up threat, while Duncan Robinson is catch-and-shoot artist. Grouping players in this manner can be made possible thanks to publicly available tracking data the NBA provides.</p>
+<p>In order to cluster players by groups, I looked at two common unsupervised learning techniques, K-Means and Gaussian Mixture Modeling (GMM). This post will only present the results of Gaussian Mixture Model in efforts to keep this post short, and also because it provided much more dynamic, sensible results than the K-Means method.</p>
+<h2 id="data-exploration--feature-selection">Data Exploration &amp; Feature Selection</h2>
+<p>For this analysis, I spent time gathering the data using a <a href="https://github.com/swar/nba_api">publicly available API</a> and then stitching together one final dataset for all the active players in the 2019-20 season. With this dataset, we can begin the data preparation process.</p>
+
+
+
+<div class="figure " >
+  
+    <img class="fig-img" src="https://i.imgur.com/aty3a7W.png"  alt="League Average represented by grey line">
+  
+   
+    <span class="caption">League Average represented by grey line</span>
+  
+</div>
+
+<p>Looking at the distribution for total minutes played, it seems to level off at the 500 minute mark, so let&rsquo;s cutoff all the players who do not achieve 500 minutes played threshold. This eliminates players with small sample sizes. Since the focus is three-point shooting, any player that did not attempt at least one three per game was removed as well. The dataset is then boiled down to 298 players,  which is a good chunk of all the players who played last year.</p>
+<p>Next, let&rsquo;s talk about the input features used in the model. There are three major components to the art of three-point shooting: creation, volume, and efficiency. Those aspects are represented using the following stats:</p>
+<ul>
+<li><strong>CS 3FGA/G</strong> - Amount of Catch-and-Shoot threes attempted per game</li>
+<li><strong>CS 3PT%</strong> - Catch and Shoot 3PT Percentage</li>
+<li><strong>PUP 3FGA/G</strong> - Amount of Pull-Up threes attempted per game</li>
+<li><strong>PUP 3PT Proficiency</strong> - Pull-Up Threes 3PT Proficiency</li>
+<li><strong>3PT%</strong> - Standard 3PT Percentage</li>
+<li><strong>%3FGM AST</strong> - Percent of 3PT Field Goals that were assisted</li>
+</ul>
+<p>The features are self-explanatory, however there is one thing to clarify. Rather than using the standard PUP 3PT% the NBA provides us, I applied <a href="https://fansided.com/2017/08/11/nylon-calculus-measuring-creation-box-score/">Ben Taylor&rsquo;s formula for 3PT proficiency</a> to get each player&rsquo;s 3PT Pull-Up Proficiency. Unfortunately, he doesn&rsquo;t go into detail about 3PT proficiency in that article, but essentially, it is a revised 3PT percentage that takes into account volume from my understanding. Here&rsquo;s a simple before and after comparison demonstrating why 3PT proficiency is a better benchmark for pull-up threes.</p>
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Embedded Analytics with Tableau</title>
+</head>
+<body>
+    <iframe width="750px" height="600px" src="https://datawrapper.dwcdn.net/buB4k/2/">
+    </iframe>
+</body>
+</html>
+
+<p>As you can see, players with small sample sizes tend to hover in the 50%-100% territory. That, of course, is not sustainable over the course of an 82-game season unless they barely take any threes off the dribble and get lucky with the first few they take. However, once we apply the formula, those percentages get reduced based on the number of pull-up threes they attempt per 100 possessions.</p>
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Embedded Analytics with Tableau</title>
+</head>
+<body>
+    <iframe width="750px" height="600px" src="https://datawrapper.dwcdn.net/NmxLg/5/">
+    </iframe>
+</body>
+</html>
+
+<p>For example, Trey Burke last year shot 55.6% on 0.5 pull-up attempts per game, but his 3PT proficiency on pull-ups is 35.3%. That percentage seems more realistic than the hyper-efficient +50% mark he shot. Obviously, the formula isn&rsquo;t a perfect blanket fix, but we can make do with it. With that out of the way, it&rsquo;s time for the modeling part.</p>
+<h2 id="gaussian-mixture-model-gmm">Gaussian Mixture Model (GMM)</h2>
+<p>Before we feed our data into the algorithm, we have to implement feature scaling so that the machine learning algorithm can consider each feature on an even playing field to avoid any feature biases.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#features - we&#39;ll use the same features as befores</span>
+gm_columns <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;CS_FG3A&#39;</span>,<span style="color:#e6db74">&#39;PUP_FG3A&#39;</span>,
+              <span style="color:#e6db74">&#39;CS_FG3_PCT&#39;</span>,<span style="color:#e6db74">&#39;PUP_PROF&#39;</span>,<span style="color:#e6db74">&#39;FG3_PCT&#39;</span>,
+              <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%3F</span><span style="color:#e6db74">GM_AST&#39;</span>
+             ]
+
+<span style="color:#75715e">#apply to 2019-20 season</span>
+gm_features <span style="color:#f92672">=</span> dataset[dataset[<span style="color:#e6db74">&#39;SEASON&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;2019-20&#39;</span>][gm_columns]<span style="color:#f92672">.</span>reset_index(drop<span style="color:#f92672">=</span>True)
+
+<span style="color:#75715e">#print basic identity of our dataset</span>
+<span style="color:#66d9ef">print</span>(gm_features<span style="color:#f92672">.</span>shape)
+scaler <span style="color:#f92672">=</span> StandardScaler()
+
+<span style="color:#75715e">#perform feature scaling (preprocessing)</span>
+<span style="color:#f92672">from</span> sklearn.preprocessing <span style="color:#f92672">import</span> StandardScaler
+X <span style="color:#f92672">=</span> scaler<span style="color:#f92672">.</span>fit_transform(gm_features)
+</code></pre></div><p>Now we can apply the Gaussian Mixture Model and use the silhouette coefficient method to evaluate the appropriate number of clusters. The silhouette coefficient, which ranges from -1 to +1, measures how well the data point fits its soft-assigned cluster by looking at how close it is to its fellow cluster points and how distant it is from points in other clusters.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#keep track of sse score for GMM models</span>
+gm_sse <span style="color:#f92672">=</span> []
+n_max <span style="color:#f92672">=</span> <span style="color:#ae81ff">15</span>
+<span style="color:#75715e">#random state number - ensure reproducibility</span>
+rs <span style="color:#f92672">=</span> <span style="color:#ae81ff">40</span>
+
+<span style="color:#75715e">#loop through each possible instance of n amount of clusters</span>
+<span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>, n_max<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+    gm <span style="color:#f92672">=</span> GaussianMixture(n_components<span style="color:#f92672">=</span>n, n_init<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, random_state<span style="color:#f92672">=</span>rs)
+    gm<span style="color:#f92672">.</span>fit(X)
+    clusters <span style="color:#f92672">=</span> gm<span style="color:#f92672">.</span>predict(X)
+    gm_sse<span style="color:#f92672">.</span>append(silhouette_score(X, clusters))
+
+<span style="color:#75715e">#plot n number of clusters vs. Silhouette Coefficient</span>
+plt<span style="color:#f92672">.</span>plot(range(<span style="color:#ae81ff">2</span>,n_max<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>), gm_sse)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Gaussian Mixture Model: # of clusters vs. Silhouette Coefficient&#39;</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Number of Clusters&#39;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;Silhouette Coefficient&#39;</span>)
+plt<span style="color:#f92672">.</span>xticks(range(<span style="color:#ae81ff">2</span>,n_max<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>))
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div>
+
+
+<div class="figure " >
+  
+    <img class="fig-img" src="https://i.imgur.com/860FqF0.png" >
+  
+  
+</div>
+
+<p>The silhouette scores shown above are interesting because two clusters scored the highest. Adding more clusters causes a continuous drop in performance until it shoots back up for six clusters. It then depreciates again, before soaring back up again for thirteen clusters.</p>
+<p>Nominally, our choice for the number of clusters is dependent on whatever gives us the highest silhouette score. However, intuition tells us that 2-4 clusters is probably not enough to describe the landscape of the three-point world, even though it has the three highest scores.</p>
+<p>Six is the next best choice, but in my testing with K-Means, five to six clusters were the optimal amount of clusters in that case and yet the results were rather wonky. Giannis Antetokounmpo got lumped into the same group with James Harden and that doesn&rsquo;t align with the eye-test. Therefore, I rolled with 13 clusters, which achieved a similar score as six clusters, so we can expand our options.</p>
+<p>Moving onto the results, we can visualize the makeups of each cluster by examining where the cluster center falls for each feature. Unlike K-Means though, Gaussian Mixture Models do not have centroids. Instead, the sample with the greatest probability of being in the cluster is considered the centroid because GMM is a probabilistic model. Alternatively, we can also take the scaled features and average out feature scores for each cluster.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#get scaled group score for each cluster</span>
+gm_cluster_centers <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(columns<span style="color:#f92672">=</span>gm_columns)
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">13</span>):
+    row <span style="color:#f92672">=</span> list(features_w_labels[features_w_labels[<span style="color:#e6db74">&#39;Cluster&#39;</span>] <span style="color:#f92672">==</span> i]<span style="color:#f92672">.</span>iloc[:,:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>mean())
+    gm_cluster_centers<span style="color:#f92672">.</span>loc[len(gm_cluster_centers)] <span style="color:#f92672">=</span> row
+
+<span style="color:#66d9ef">print</span>(gm_cluster_centers<span style="color:#f92672">.</span>shape)
+gm_cluster_centers<span style="color:#f92672">.</span>head()
+
+<span style="color:#75715e">#setting up the sub-plot</span>
+fig, ((ax1, ax2), (ax3, ax4), (ax5, ax6), (ax7, ax8), (ax9, ax10), (ax11, ax12), (ax13, ax14)) <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">2</span>, sharex<span style="color:#f92672">=</span>True, sharey<span style="color:#f92672">=</span>True, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>,<span style="color:#ae81ff">16</span>))
+
+<span style="color:#75715e">#labeling the common title, x-axis and y-axis label</span>
+fig<span style="color:#f92672">.</span>text(<span style="color:#ae81ff">0.075</span>,<span style="color:#ae81ff">0.5</span>,<span style="color:#e6db74">&#39;Scaled Group Score&#39;</span>, va<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;center&#39;</span>,
+         rotation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;vertical&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">12.5</span>)
+fig<span style="color:#f92672">.</span>text(<span style="color:#ae81ff">0.475</span>,<span style="color:#ae81ff">0.025</span>,<span style="color:#e6db74">&#39;Predictor&#39;</span>,
+         va<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;center&#39;</span>,fontsize<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;12.5&#39;</span>)
+fig<span style="color:#f92672">.</span>suptitle(<span style="color:#e6db74">&#39;Visualizing GMM Cluster Makeups&#39;</span>,
+             weight<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;bold&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>)
+
+<span style="color:#75715e">#keeping all the axs in a list</span>
+gm_axs <span style="color:#f92672">=</span> [ax1,ax2,ax3,ax4,ax5,ax6,ax7,
+          ax8,ax9,ax10,ax11,ax12,ax13]
+
+<span style="color:#75715e">#setting up the colormap</span>
+colors <span style="color:#f92672">=</span> cm<span style="color:#f92672">.</span>rainbow(np<span style="color:#f92672">.</span>linspace(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, len(gm_axs)))
+
+<span style="color:#75715e">#plot the scatterplot for each cluster on each individual subplot</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(gm_axs)):                            <span style="color:#75715e">#loop through all the subplots                                            </span>
+    ax <span style="color:#f92672">=</span> gm_axs[i]                                      <span style="color:#75715e">#grab axis of subplot</span>
+    ax<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Cluster &#39;</span> <span style="color:#f92672">+</span> str(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))                 <span style="color:#75715e">#set subplot&#39;s title</span>
+    <span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> gm_cluster_centers<span style="color:#f92672">.</span>iterrows():    <span style="color:#75715e">#loop through each row (scaled group score)</span>
+        <span style="color:#66d9ef">if</span> index <span style="color:#f92672">!=</span> i:
+            ax<span style="color:#f92672">.</span>scatter(gm_cluster_centers<span style="color:#f92672">.</span>columns, row, <span style="color:#75715e">#plot other cluster centroids</span>
+                       s<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span>, c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;grey&#39;</span>)
+        <span style="color:#66d9ef">else</span>:                                           <span style="color:#75715e">#save the scaled group score in question</span>
+            cluster_centers <span style="color:#f92672">=</span> row
+    ax<span style="color:#f92672">.</span>scatter(gm_cluster_centers<span style="color:#f92672">.</span>columns,              <span style="color:#75715e">#plot the scaled group score in question</span>
+               cluster_centers, s<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span>, color<span style="color:#f92672">=</span>colors[i])
+    ax<span style="color:#f92672">.</span>tick_params(axis<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;x&#34;</span>, rotation<span style="color:#f92672">=</span><span style="color:#ae81ff">45</span>, labelsize<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;8&#39;</span>)
+
+<span style="color:#75715e">#delete 14th subplot</span>
+fig<span style="color:#f92672">.</span>delaxes(ax14)
+</code></pre></div><p>The first few lines grabs the scaled group score, or &ldquo;centroid&rdquo; if it helps to think in that matter, for the clusters. While the rest of the code plots the scatterplot shown, representing the feature makeups of each cluster. The results are as follow:</p>
+
+
+
+<div class="figure " >
+  
+    <img class="fig-img" src="https://i.imgur.com/xojN7M7.png" >
+  
+  
+</div>
+
+<p>Thirteen clusters might be a few too many since some of the groups share somewhat similar characteristics, but I&rsquo;m pleased with how the clusters turn out overall. Here&rsquo;s a quick description and mini-preview of each cluster:</p>
+<ul>
+<li><strong>Cluster 1:</strong> Middling, Low-Volume Floor Spacers - Jonathan Isaac, Patrick Patterson, Paul Millsap, etc.</li>
+<li><strong>Cluster 2:</strong> High Volume, Hyper Efficient Catch-and-Shoot Players: Davis Bertans, Joe Harris, Gordon Hayward, Karl-Anthony Towns, etc.</li>
+<li><strong>Cluster 3:</strong> Poor 3PT Shot Creators: De&rsquo;Aaron Fox, Russell Westbrook, Jimmy Butler, etc.</li>
+<li><strong>Cluster 4:</strong> Super Inefficient Floor Spacers: Draymond Green, Julius Randle, Luguentz Dort, etc.</li>
+<li><strong>Cluster 5:</strong> Moderate Volume, Effective Floor Spacers: OG Anunoby, Serge Ibaka, Carmelo Anthony, etc.</li>
+<li><strong>Cluster 6:</strong> Inconsistent / Inefficient Floor Spacers: Gary Harris, Jordan Poole, Aaron Gordon, etc.</li>
+<li><strong>Cluster 7:</strong> High-Volume, Long-Range 3PT Creators: Damian Lillard, Trae Young, James Harden, and Luka Doncic</li>
+<li><strong>Cluster 8:</strong> Efficient, Low-Volume Floor Spacers: Brad Wanamaker, Derrick White, Collin Sexton, etc.</li>
+<li><strong>Cluster 9:</strong> Efficient, Off-the-Dribble Creators: Chris Paul, D&rsquo;Angelo Russell, Kyrie Irving, Kemba Walker, etc.</li>
+<li><strong>Cluster 10:</strong>: Elite Shooter: George Hill, Rodney Hood, and Seth Curry</li>
+<li><strong>Cluster 11:</strong> High-Volume, Volatile Spot-Up Shooters: Kristaps Porzingis, Robert Covington, Jae Crowder, Eric Gordon, etc.</li>
+<li><strong>Cluster 12:</strong> Combo Shooter (Off the catch or off the dribble): Khris Middleton, Paul George, C.J. McCollum, Bradley Beal, etc.</li>
+<li><strong>Cluster 13:</strong> Poor, hesitant shooters: Elfrid Payton, Markelle Fultz, Dwight Powell, etc.</li>
+</ul>
+<h2 id="minimum-spanning-tree-diagram-of-our-cluster-analysis">Minimum Spanning Tree Diagram of our Cluster Analysis</h2>
+<p>Minimum Spanning Tree (MST) is a network diagram that connects all the nodes together by minimizing the amount of edges by trimming down the edge weights to a minimum, creating an elegant diagram without any loops or cycles. In this case, the weighted edges are represented by the cluster classification probabilities each single data point receives from the Gaussian Mixture Model. After it is reduced down to a Minimum Spanning Tree, the final visualization shows which observations within each cluster are similar and which clusters are alike others. The end result is this:</p>
+
+
+
+<div class="figure " >
+  
+    <img class="fig-img" src="https://i.imgur.com/7DelN6J.png"  alt="League Average represented by grey line">
+  
+   
+    <span class="caption">League Average represented by grey line</span>
+  
+</div>
+
+<p>This diagram was created in Tableau and made possible thanks to a <a href="https://ladataviz.com/2019/12/15/build-a-network-graph-in-tableau-in-three-steps/">tutorial that can be found here</a>. Also huge thanks to <a href="https://alexcstern.github.io/hoopDown.html">Alex Stern</a>, who inspired this project.</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://lukarh.github.io/tags/nba-analytics/">nba analytics</a>
+
+  <a class="tag tag--primary tag--small" href="https://lukarh.github.io/tags/nba/">nba</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/" data-tooltip="Analytics: Visualizing the Size Advantagee">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2021 Lukar Huang. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/" data-tooltip="Analytics: Visualizing the Size Advantagee">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flukarh.github.io%2F2021%2F01%2Fanalytics-clustering-3pt-shooters%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Flukarh.github.io%2F2021%2F01%2Fanalytics-clustering-3pt-shooters%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Flukarh.github.io%2F2021%2F01%2Fanalytics-clustering-3pt-shooters%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/73f43cd288b0a481002bce984d00baad?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Lukar Huang</h4>
+    
+      <div id="about-card-bio">Third Year Undergraduate at Carnegie Mellon studying Physics</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Youth Employment Coordinator Intern
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Boston, MA
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://lukarh.github.io/img/sidebar.png');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://lukarh.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/lukarh.github.io\/2021\/01\/analytics-clustering-3pt-shooters\/';
+          
+            this.page.identifier = '\/2021\/01\/analytics-clustering-3pt-shooters\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

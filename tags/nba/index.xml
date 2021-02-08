@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nba on Home</title>
+    <link>https://lukarh.github.io/tags/nba/</link>
+    <description>Recent content in nba on Home</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://lukarh.github.io/tags/nba/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Analytics: Clustering 3PT Shooters</title>
+      <link>https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/</link>
+      <pubDate>Mon, 04 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Analytics: Visualizing the Size Advantagee</title>
+      <link>https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/</link>
+      <pubDate>Mon, 21 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/</guid>
+      <description>&lt;p&gt;Just a day before the 2020 trade deadline, former Houston Rockets GM Daryl Morey pulled the trigger on an enormous four-team deal, shipping out center Clint Capela in exchange for former All-Defensive Team member Robert Covington.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

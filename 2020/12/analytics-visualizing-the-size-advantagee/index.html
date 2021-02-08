@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.76.5 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="Lukar Huang">
+<meta name="keywords" content="">
+<meta name="description" content="Just a day before the 2020 trade deadline, former Houston Rockets GM Daryl Morey pulled the trigger on an enormous four-team deal, shipping out center Clint Capela in exchange for former All-Defensive Team member Robert Covington.">
+
+
+<meta property="og:description" content="Just a day before the 2020 trade deadline, former Houston Rockets GM Daryl Morey pulled the trigger on an enormous four-team deal, shipping out center Clint Capela in exchange for former All-Defensive Team member Robert Covington.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Analytics: Visualizing the Size Advantagee">
+<meta name="twitter:title" content="Analytics: Visualizing the Size Advantagee">
+<meta property="og:url" content="https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/">
+<meta property="twitter:url" content="https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/">
+<meta property="og:site_name" content="Home">
+<meta property="og:description" content="Just a day before the 2020 trade deadline, former Houston Rockets GM Daryl Morey pulled the trigger on an enormous four-team deal, shipping out center Clint Capela in exchange for former All-Defensive Team member Robert Covington.">
+<meta name="twitter:description" content="Just a day before the 2020 trade deadline, former Houston Rockets GM Daryl Morey pulled the trigger on an enormous four-team deal, shipping out center Clint Capela in exchange for former All-Defensive Team member Robert Covington.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2020-12-21T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2020-12-21T00:00:00">
+  
+  
+  
+  
+    
+      <meta property="article:tag" content="nba analytics">
+    
+      <meta property="article:tag" content="nba">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://lukarh.github.io/img/defense-cover.jpg">
+  <meta property="twitter:image" content="https://lukarh.github.io/img/defense-cover.jpg">
+
+
+  <meta property="og:image" content="https://lukarh.github.io/img/defense-cover.jpg">
+  <meta property="twitter:image" content="https://lukarh.github.io/img/defense-cover.jpg">
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/73f43cd288b0a481002bce984d00baad?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/73f43cd288b0a481002bce984d00baad?s=640">
+
+
+    <title>Analytics: Visualizing the Size Advantagee</title>
+
+    <link rel="icon" href="https://lukarh.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://lukarh.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://lukarh.github.io/">Home</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://lukarh.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/73f43cd288b0a481002bce984d00baad?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://lukarh.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/73f43cd288b0a481002bce984d00baad?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Lukar Huang</h4>
+        
+          <h5 class="sidebar-profile-bio">Third Year Undergraduate at Carnegie Mellon studying Physics</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lukarh.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lukarh.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lukarh.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lukarh.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lukarh.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/lukarh" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/lukar-huang-50682a146/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">Linkedin</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+  <div class="post-header-cover
+              text-center
+              post-header-cover--partial"
+       style="background-image:url('/img/defense-cover.jpg')"
+       data-behavior="4">
+    
+  </div>
+
+
+      <div id="main" data-behavior="4"
+        class="hasCover
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Analytics: Visualizing the Size Advantagee
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-12-21T00:00:00Z">
+        
+  December 21, 2020
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>Just a day before the 2020 trade deadline, former Houston Rockets GM Daryl Morey pulled the trigger on an enormous four-team deal, shipping out center Clint Capela in exchange for former All-Defensive Team member Robert Covington.</p>
+<p>It was a signal to the rest of league that they were going all in on the hottest trend of the decade. <em>Small-ball</em>. The Rockets legitimately had no proven 6’10” or 7’ prototypical center on their roster. In fact, all of their key rotation pieces were either a hair short of being 6’8” or a few inches under that. Without any center for the rest of the season, Mike D’Antoni installed a new starting lineup, replacing Capela with undersized defensive pest Covington at the five spot to play with alongside his usual starting four: Westbrook, Harden, House Jr. and Tucker. They were so outrageously small, it warranted a nickname of its own. <em>Micro-ball</em>.</p>
+<p>Unlike recent renditions of small-ball lineups we’ve seen, the Rockets’ micro-ball experiment took place in a territory of its own. They took small-ball to whole another gear by playing it all game long. Not even the Warriors’, who are considered to be the pioneers of this ongoing revolution, were crazy enough to play their version of small-ball, and yet they weren&rsquo;t as short like the Rockets. For perspective, the Rockets’ abnormally small starting lineup had an average height of 6’5.5” and a height variance of 1.7. (The lower the variance, the more similar in size) That’s low enough to rank in the <strong>3rd percentile</strong> and <strong>0th percentile</strong> respectively out of 900 lineups that played +100 minutes since 2013.</p>
+<p>The biggest question mark surrounding micro-ball was how they going to deal with size on the defensive end. But despite being lackluster in height, micro-ball was built to be the most switchable lineup to date at the time. So, this begs a few questions. Should more teams follow suit? Are lineups becoming progressively smaller? How important is it to have size on defense? Which teams are going into the 2020-21 season with the size advantage?</p>
+<h4 id="a-historical-perspective-on-lineups"><strong>A Historical Perspective on Lineups</strong></h4>
+<p>To begin, the average height of the most frequently used lineups (+100 minutes) has only marginally decreased by <strong>0.25 inches</strong> since the 2014-2015 season. This steady downward trend follows a small, but sharp <strong>0.28 inches</strong> increase in average height from the 2013-14 season. So while small-ball has supposedly taken the league by storm, lineups haven’t necessarily become much smaller. Instead, the biggest change we see in five-man combinations is the variance in height.</p>
+
+
+
+<div class="figure " >
+  
+    <img class="fig-img" src="https://i.imgur.com/wga3aa5.png"  alt="League Average represented by grey line">
+  
+   
+    <span class="caption">League Average represented by grey line</span>
+  
+</div>
+
+<p>Evidently, coaches are now deploying lineups composed with players of similar size. Data shows average height variance steadily dropping from <strong>11.51</strong> in the 2014-15 season to <strong>9.93</strong> last year. Much of the credit for this movement toward equally-sized, switchable lineups belongs to the Warriors and their infamous death lineup.</p>
+
+
+
+<div class="figure " >
+  
+    <img class="fig-img" src="https://i.imgur.com/X8jbZ1q.png"  alt="Line in the middle represents average of other teams, not league average">
+  
+   
+    <span class="caption">Line in the middle represents average of other teams, not league average</span>
+  
+</div>
+
+<p>The graph above highlights the undeniable influence the Warriors have had on a few teams in recent years. With switching becoming a common occurrence in modern NBA defenses, teams have opted to overhaul or retool their rosters in order to create a more switchable and versatile lineup. For instance, the Celtics, during the summer of 2017, swapped Isaiah Thomas for Kyrie Irving in favor of height. They even signed newly acclaimed All-Star Gordon Hayward that offseason, allowing them to play three switchable long wings on the floor together. The 76ers, on the other hand, made similar motivated moves not too long ago. Trading for Tobias Harris and Josh Richardson expanded their rotation at the wing, and signing Al Horford gave them a backup, mobile big. You get the gist.</p>
+<p>But just how important is it for lineups to maintain a low height variance? Teams obviously don’t go out of their way to reach a low height variance value, but there’s a tangible benefit they gain on the defensive end from creating these equally-sized lineups. These types of lineups forfeit their opponent’s right to any sizeable matchup advantage on switches. In an <a href="https://www.espn.com/nba/story/_/id/28837914/the-houston-rockets-daring-teams-outmuscle-their-micro-ball-defense">ESPN article</a>, a coach discusses the theory behind the Rocket’s micro-ball as such,</p>
+<blockquote>
+<p>&ldquo;You can&rsquo;t try to play matchup basketball,&rdquo; a Western Conference head coach said. &ldquo;That&rsquo;s what they want. You have to beat them with [ball] movement.&rdquo;</p>
+</blockquote>
+<p>This advantage was captured <a href="https://theathletic.com/127644/2017/10/15/the-warriors-have-revolutionized-small-ball-but-are-they-really-small-lets-debunk-that-myth/">in an old article detailing the Warriors by Todd Whitehead</a>, showing lineups of equal heights did indeed do better on defense during the 2016-17 season. (Also thanks Todd for inspiring this post) However, if we extend that analysis further by adding in sampling from other years, the relationship between height variance and defensive rating breaks down, even when you adjust defensive rating for inflation. So if height variance doesn’t matter, then what does?</p>
+<p>Todd also mentioned a statistically significant relationship between <em>average standing reach</em> (or functional height) and defensive rating in his study. That relationship sort of stayed true in this 7-year sample from 2013 to 2020, but it wasn’t statistically significant enough. (A 7-year sample was used due to limited standing reach and wingspan data going back) Instead, it was wingspan that showed a statistically significant relationship with defensive rating. (p = 0.04)</p>
+
+
+
+<div class="figure " >
+  
+    <img class="fig-img" src="https://i.imgur.com/b3XK2mO.png"  alt="Applying stricter conditions to buy more time for lineup data to normalize (in this case &#43;500 possessions and &#43;100 minutes played), the relationship becomes more statistically significant.">
+  
+   
+    <span class="caption">Applying stricter conditions to buy more time for lineup data to normalize (in this case &#43;500 possessions and &#43;100 minutes played), the relationship becomes more statistically significant.</span>
+  
+</div>
+
+<p>If you were expecting a stronger relationship between the two variables, let’s remember that defensive rating is a noisy data point for lineups. Every lineup will certainly produce their results under different circumstances, opponents, and periods of time. Also, players with similar physical traits don’t necessarily provide the same value on defense. Therefore, there are way too many external factors outside of physicals traits baked into the equation for defense.</p>
+<p>Nevertheless, seeing lineups with longer wingspans tilt toward the region of better defenses makes sense intuitively. Not only is wingspan directly related to standing reach and functional height, but it’s also related to the player’s maximum horizontal plane of reach. Being able to cover a larger radius horizontally allows for better chances to swipe at the ball, stronger shot contests, and more pass denials.</p>
+<p>Looking at the plot again, a handful of notable data points are emphasized. The Spurs during the Kawhi-era stand out since they made a living out of the right corner of the graph, highlighting their impressive dominance on defense and the freakish length they had on their roster. Those physical tools aided them in their ability to force opponents to score 10 points, and even sometimes 20 points, per 100 possessions well below league average.</p>
+<p>Meanwhile, the Rockets’ starting lineup were noticeably worst on defense when they downgraded in size by having the center position be played by Robert Covington and P.J. Tucker. Let’s dive deeper with film to see what the analytics is perhaps capturing on court.</p>
+<h4 id="case-study-micro-ball-vs-the-lakers-----the-wingspan-effect"><strong>Case Study: Micro-ball vs. the Lakers  -  The Wingspan Effect</strong></h4>
+<p>After the Rockets traded Capela away and went all in on micro-ball, their new starting unit performed worst defensively, giving up an extra <strong>3.6 points per 100 possessions</strong>. Prior to the trade, the Rockets were already one of the league’s worst at protecting the paint with Capela, but substituting him for Covington only amplified that weakness as they ended the season ranked 27th in opponent’s points in the paint per game during the regular season.</p>
+<p>This weakness was exposed in the playoffs, where last year’s battle between the Rockets’ micro-ball and the Lakers’ bully ball showcased why size and length still matters in an era where “<a href="https://fansided.com/2017/11/10/nylon-calculus-small-ball-skill-ball/">small-ball</a>” has supposedly taken the league by storm. It’s an easy assertion to make with Rockets losing 1-4 pretty convincingly, but it’s another thing to see it on film.</p>
+<p>Having the length advantage over your opponent is a subtle, but destructive weapon to have. Passing windows start to shrink. Contests on shots start to feel heavier. Angles that used to be open aren’t there anymore. Quite frankly, it can change the entire geometry of how a possession is played out. And that advantage is enough to be quite the difference maker in how effective and robust your defense can be like we saw in the plot.</p>
+<p>Going back to the Rockets, they struggled to contain drives to the rim all season long. During their second round matchup, the Lakers muscled their way into the paint despite the Rockets’ ability to switch everything. Watch Gordon switch onto James, but LeBron just discards Gordon and Tucker is a fraction too late to save the and-one from happening because of those short arms. (sorry Tucker!)</p>
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F0fc41066-fb01-4c47-8d4c-637d992bb273_600x338.gif"  alt="LeBron takes it to the hole with ease">
+  
+   
+    <span class="caption">LeBron takes it to the hole with ease</span>
+  
+</div>
+
+<p>On this next play, Covington initially gets a block on Kuzma, but when the 6’10” giant Anthony Davis comes full head steam toward the basket, he can’t provide any sort of resistance on the drive.</p>
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F9a3726a6-c7e5-49ae-9b71-5a1daa1d5ad8_600x338.gif"  alt="Anthony Davis euros his way with ease to the rim">
+  
+   
+    <span class="caption">Anthony Davis euros his way with ease to the rim</span>
+  
+</div>
+
+<p>Even when the Rockets forced the Lakers into a shot of their liking, they were unable to secure the fruits of their labor, letting the Lakers grab <strong>29.3%</strong> of the available offensive rebounds that series. The Rockets themselves grabbed only <strong>19.5%</strong> of them.</p>
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F821c15b6-e952-48b8-a4d4-f2e3f3ab442d_600x338.gif"  alt="Anthony Davis flies in for the offense rebound">
+  
+   
+    <span class="caption">Anthony Davis flies in for the offense rebound</span>
+  
+</div>
+
+<p>As a result, the Rockets allowed the Lakers to score an unhealthy <strong>49.2 points</strong> in the paint per game that series. On the flip side, the Lakers only surrendered a cool <strong>34.8 points</strong> inside, thanks to Anthony Davis’ superb ability to act as a free safety on sneaky slips to the basket, mucking up shots into the oblivion.</p>
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F410e75eb-ee43-4444-b00e-797636d36c84_600x338.gif"  alt="Davis prevents a clean look at a layup">
+  
+   
+    <span class="caption">Davis prevents a clean look at a layup</span>
+  
+</div>
+
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fb4440694-a148-4937-8bf6-6cec5f53d1c3_600x338.gif"  alt="Covington meets a brick wall at the rim">
+  
+   
+    <span class="caption">Covington meets a brick wall at the rim</span>
+  
+</div>
+
+<p>Even on switches, both Anthony Davis and LeBron James were fantastic at sitting home on drives and towering over them with those long arms held up high, preventing any clean angle for a shot at the rim.</p>
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fb2618abc-9db7-4ae6-a1ea-9e5c114cca83_600x338.gif"  alt="Gordon’s unsuccessful attacking Davis on a drive">
+  
+   
+    <span class="caption">Gordon’s unsuccessful attacking Davis on a drive</span>
+  
+</div>
+
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F768083e4-cf73-41cd-b9f9-157b57f7e80d_600x338.gif"  alt="Westbrook attempts to use the classic “use the rim to shield yourself from the contest” but LeBron is there to meet him on the other side still">
+  
+   
+    <span class="caption">Westbrook attempts to use the classic “use the rim to shield yourself from the contest” but LeBron is there to meet him on the other side still</span>
+  
+</div>
+
+<p>With those long arms always in play, the Rockets were also intimidated into some point-black misses at the basket.</p>
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fe7fd2637-c60d-484c-ba3c-cc41d482a7e5_600x338.gif"  alt="Harden can’t hit Green on the roll, and LeBron alters the difficulty level on what would be an easy layup">
+  
+   
+    <span class="caption">Harden can’t hit Green on the roll, and LeBron alters the difficulty level on what would be an easy layup</span>
+  
+</div>
+
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F6aa8907f-9708-4b20-978a-eaa1e3076b77_600x338.gif"  alt="Rivers catches himself second guessing mid-attempt as Davis rotates over">
+  
+   
+    <span class="caption">Rivers catches himself second guessing mid-attempt as Davis rotates over</span>
+  
+</div>
+
+<p>But it wasn’t just the All-Star duo doing all the heavy lifting on defense. The 2020 champions surrounded their two stars with wiry and long players. For the record, the Lakers’ starting unit in the playoffs ranked in the <strong>97th percentile</strong> for average wingspan, <strong>94th percentile</strong> for height, and <strong>97th percentile</strong> for standing reach.</p>
+<p>When the Lakers shifted Anthony Davis to center and placed either Markieff Morris or Kyle Kuzma at the 4, the move hardly gave up any size. Those lineups ranked at least in the <strong>70th percentile</strong> or higher in each category. Meanwhile, micro-ball placed in the <strong>28th percentile</strong> for wingspan, <strong>3rd percentile</strong> for height, and <strong>21st percentile</strong> for standing reach. So for much of the series, the Rockets found themselves shorthanded trying to navigate through a forest of long arms.</p>
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fc4ff7806-629b-4a7d-ae6e-8894855933bd_600x338.gif"  alt="Green saves an easy look, and Westbrook struggles to find the angle around McGee and Green">
+  
+   
+    <span class="caption">Green saves an easy look, and Westbrook struggles to find the angle around McGee and Green</span>
+  
+</div>
+
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F9912e48a-c8aa-4813-b5ed-2b1cb78e074b_600x338.gif"  alt="Morris forces an out of bounds off Gordon">
+  
+   
+    <span class="caption">Morris forces an out of bounds off Gordon</span>
+  
+</div>
+
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fe242b029-08b4-4824-964b-275d80b5aa58_600x338.gif"  alt="Gordon creates nothing versus Kuzma and Green is unable to get off a clean look against Kuzma’s 7’&#43; wingspan">
+  
+   
+    <span class="caption">Gordon creates nothing versus Kuzma and Green is unable to get off a clean look against Kuzma’s 7’&#43; wingspan</span>
+  
+</div>
+
+<p>(Side Note: <a href="https://www.youtube.com/watch?v=JI7RzfvTaGw&amp;feature=youtu.be">For all the slack the Lakers’ role players get on social media during the playoffs, they do not get enough credit for the stout defense they played all playoff-long!</a>)</p>
+<p>The Rockets also had issues hitting the short roll at times with the rangy-Lakers cluttering the passing angles.</p>
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F45d54daf-0e4d-4aca-aab6-b6cb600e05a1_600x338.gif"  alt="LeBron and Morris clog the short roll pass">
+  
+   
+    <span class="caption">LeBron and Morris clog the short roll pass</span>
+  
+</div>
+
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fde91604b-aa77-47d0-974f-53def37f16b9_600x338.gif"  alt="Green disrupts the connection">
+  
+   
+    <span class="caption">Green disrupts the connection</span>
+  
+</div>
+
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F5b23cc2c-54ab-4772-8c8a-7d396c665271_600x338.gif"  alt="The Lakers blitz the pick-and-roll and Rondo pickpockets Harden">
+  
+   
+    <span class="caption">The Lakers blitz the pick-and-roll and Rondo pickpockets Harden</span>
+  
+</div>
+
+<p>And on kick-outs, the Lakers were ready to pounce on those as well. These are all seemingly careless turnovers at first glance, but the Lakers’ extraordinary length played a vital role in forcing the Rockets into uncomfortable situations.</p>
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fa49a00fb-743c-401f-a838-6c8c6e19694a_600x338.gif"  alt="Westbrook can’t buy a look at the rim and Green eats up the pass">
+  
+   
+    <span class="caption">Westbrook can’t buy a look at the rim and Green eats up the pass</span>
+  
+</div>
+
+
+
+
+<div class="figure center" >
+  
+    <img class="fig-img" src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F6c78b3f6-bd73-4688-87ff-947ea06a4170_600x338.gif"  alt="Houston can’t generate anything good with the Lakers’ switching. Anthony Davis then snatches a corner pocket pass out on the weak side">
+  
+   
+    <span class="caption">Houston can’t generate anything good with the Lakers’ switching. Anthony Davis then snatches a corner pocket pass out on the weak side</span>
+  
+</div>
+
+<p>In the end, the Lakers, funnily enough, appeared to be more equipped to handle switches and cross matchups than the Rockets. Micro-ball was built to be the most switchable lineup to date, yet it lacked the necessary size and functional height the Lakers had to matchup well against all sorts of playstyles. On offense, they were swarmed with flailing long arms and met with heavy contests every direction they went. On the other end, they struggled to guard the paint with no bigs as the Laker’s dynamic duo combined to shoot an absurd <strong>+80%</strong> inside the paint. The Lakers’ length simply overwhelmed them and they had no answer for it.</p>
+<p>So while we’re in this era of “small-ball”,  it’s important to remember that size still matters in this game. Being able to switch everything is nice, but being able to switch and maintain the size advantage is even better. It’s why the Warriors were so successful on defense as <a href="https://fansided.com/2018/03/05/nylon-calculus-height-defensive-matchups/">they would frequently have the height advantage against many of its opponents</a>.</p>
+<p>The series between the two also demonstrated how key it is to have flexibility on defense and an actual rim protector. Houston solely relied on their severely undersized wings to patrol the paint, giving them less margin for error on defense. Meanwhile, the Warriors and Lakers both had the option to toggle between their hybrid-big and their actual bigs to play center. It’s the defining factor that separates the Rockets’ defense from the two.</p>
+<h4 id="wellwho-has-the-size-advantage-this-year">Well…who has the size advantage this year?</h4>
+<p>It turns out, constructing a roster with long wingspan players can do wonders for a team’s defense. Granted, the player must also have solid basketball IQ and awareness to be a great defender, but it’s undeniable that having length can enhance the quality of your defense.</p>
+<p>Ask the Warriors. Because after an unfruitful season with their 26th ranked defense, they willingly traded D’Angelo Russell away midseason for the wiry Andrew Wiggins. They followed that move up during the offseason by bringing in additional wings with seven-feet plus wingspans: Kelly Oubre Jr. and Kent Bazemore. And with their second overall pick, they drafted 7’1 giant James Wiseman, who has a 9’6” standing reach and oozes a ton of potential on the defensive end. <a href="https://www.nbcsports.com/bayarea/warriors/steve-kerr-says-2020-21-warriors-must-have-top-10-defense-compete">All of this gives reason as to why Steve Kerr is coming into this year with way more optimism than last season about their defense.</a></p>
+<p>So who has the size advantage this year? Well, since lineups are not set in stone at the moment, a minutes-weighted average for each of the three primary traits was calculated. <a href="https://twitter.com/kpelton/status/1337167368905052169">Major thanks to ESPN’s Kevin Pelton for his minutes projections.</a> After crunching the numbers, the Lakers rank number one in average wingspan, just like last year. Trailing the Lakers are unsurprisingly the 76ers and the Warriors. The rest is for you to take a look.</p>
+<p>
+
+
+<div class="figure " >
+  
+    <img class="fig-img" src="https://i.imgur.com/8H2SISS.png" >
+  
+  
+</div>
+
+
+
+
+<div class="figure " >
+  
+    <img class="fig-img" src="https://i.imgur.com/lmKJw9C.png" >
+  
+  
+</div>
+
+
+
+
+<div class="figure " >
+  
+    <img class="fig-img" src="https://i.imgur.com/r1Bofyj.png" >
+  
+  
+</div>
+</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://lukarh.github.io/tags/nba-analytics/">nba analytics</a>
+
+  <a class="tag tag--primary tag--small" href="https://lukarh.github.io/tags/nba/">nba</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/" data-tooltip="Analytics: Clustering 3PT Shooters">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2021 Lukar Huang. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lukarh.github.io/2021/01/analytics-clustering-3pt-shooters/" data-tooltip="Analytics: Clustering 3PT Shooters">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lukarh.github.io/2020/12/analytics-visualizing-the-size-advantagee/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flukarh.github.io%2F2020%2F12%2Fanalytics-visualizing-the-size-advantagee%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Flukarh.github.io%2F2020%2F12%2Fanalytics-visualizing-the-size-advantagee%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Flukarh.github.io%2F2020%2F12%2Fanalytics-visualizing-the-size-advantagee%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/73f43cd288b0a481002bce984d00baad?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Lukar Huang</h4>
+    
+      <div id="about-card-bio">Third Year Undergraduate at Carnegie Mellon studying Physics</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Youth Employment Coordinator Intern
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Boston, MA
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://lukarh.github.io/img/sidebar.png');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://lukarh.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/lukarh.github.io\/2020\/12\/analytics-visualizing-the-size-advantagee\/';
+          
+            this.page.identifier = '\/2020\/12\/analytics-visualizing-the-size-advantagee\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+
